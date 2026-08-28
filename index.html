@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sarkari Resalt</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, Helvetica, sans-serif; }
+        body { background: #f4f4f4; color: #333; }
+        .top-header { background: #b71c1c; color: white; text-align: center; padding: 15px; }
+        .top-header h1 { font-size: 38px; font-weight: 800; letter-spacing: -1px; }
+        .top-header p { font-size: 18px; font-weight: bold; }
+        .nav-bar { background: #1a237e; display: flex; justify-content: space-between; align-items: center; color: white; padding: 0 15px; }
+        .nav-menu { display: flex; align-items: center; font-weight: bold; font-size: 15px; cursor: pointer; }
+        .nav-menu i { margin-right: 8px; }
+        .nav-links { display: flex; }
+        .nav-links a { text-decoration: none; color: white; font-weight: bold; font-size: 13px; padding: 10px 10px; cursor: pointer; }
+        .nav-icon { cursor: pointer; color: white; font-size: 18px; }
+        @media (max-width: 600px) { .nav-links { display: none; } }
+        .banner { background: #fff; padding: 15px; text-align: center; font-size: 15px; border-bottom: 1px solid #ddd; }
+        .banner b { color: #b71c1c; }
+        .banner-btn { background: #0d47a1; color: white; padding: 5px 10px; border-radius: 5px; font-size: 14px; font-weight: bold; text-decoration: none; }
+        .home-container { max-width: 1100px; margin: 0 auto; padding: 15px; background: #fff; }
+        .tools-title { text-align: center; font-size: 20px; font-weight: bold; color: #0d47a1; margin: 20px 0; text-decoration: underline; cursor: pointer; }
+        .tools-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px; }
+        @media (max-width: 600px) { .tools-grid { grid-template-columns: repeat(2, 1fr); } }
+        .tool-box { color: white; text-align: center; padding: 15px; font-size: 14px; font-weight: bold; border-radius: 4px; cursor: pointer; }
+        .t-red { background: #d32f2f; } .t-orange { background: #f57c00; } .t-pink { background: #e91e63; }
+        .t-blue { background: #1976d2; } .t-green { background: #388e3c; } .t-maroon { background: #880e4f; }
+        .discover-box { border: 1px solid #ddd; margin-bottom: 20px; background: #fff; }
+        .discover-header { padding: 15px; border-bottom: 1px solid #ddd; font-size: 16px; font-weight: bold; }
+        .discover-row { padding: 15px; border-bottom: 1px solid #ddd; cursor: pointer; font-size: 15px; display: flex; justify-content: space-between; }
+        .arrow { color: #1976d2; font-weight: bold; }
+        
+        .grid-3 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+        @media (min-width: 900px) { .grid-3 { grid-template-columns: repeat(3, 1fr); } }
+        .box { border: 1px solid #ddd; background: #fff; }
+        .box-header { background: #a52a2a; color: white; text-align: center; padding: 10px; font-weight: bold; font-size: 16px; }
+        .box-content { padding: 10px; }
+        .box-content ul { list-style: square inside; padding-left: 5px; margin-top: 5px; }
+        .box-content li { margin-bottom: 5px; font-size: 13px; }
+        .box-content a { text-decoration: none; color: #0055ff; font-size: 13px; cursor: pointer; }
+        .box-content a:hover { text-decoration: underline; color: #0033cc; }
+        .view-more { background: #1976d2; color: white; text-decoration: none; text-align: center; display: block; padding: 8px; width: 90px; margin: 10px auto; border-radius: 20px; font-size: 13px; font-weight: bold; cursor: pointer; }
+        .result-pill { background: #1976d2; color: white; font-size: 12px; padding: 4px 10px; border-radius: 20px; text-align: center; margin-bottom: 10px; display: block; }
+
+        .owner-section { background: linear-gradient(135deg, #1a237e, #311b92); color: white; text-align: center; padding: 40px 20px; border-top: 4px solid #b71c1c; }
+        .owner-img { width: 150px; height: 150px; border-radius: 50%; border: 5px solid #fff; object-fit: cover; margin-bottom: 15px; }
+        .owner-name { font-size: 36px; font-weight: 900; color: #ffc107; text-shadow: 2px 2px 0 #b71c1c; }
+        .owner-title { font-size: 18px; margin-bottom: 10px; font-weight: bold; }
+        .owner-details { font-size: 15px; line-height: 1.8; }
+        .owner-details b { color: #4caf50; }
+        .owner-contact { font-size: 18px; font-weight: bold; margin-top: 15px; color: #ffc107; }
+
+        .detail-page { display: none; max-width: 850px; margin: 0 auto; background: #fff; padding: 15px; animation: fadeIn 0.4s; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .back-btn { background: #ddd; border: none; padding: 10px 15px; cursor: pointer; font-size: 14px; margin-bottom: 15px; border-radius: 5px; }
+        .dt-title { font-size: 20px; font-weight: bold; color: #b71c1c; margin-bottom: 10px; }
+        .dt-date { font-size: 14px; color: #666; margin-bottom: 15px; }
+        .dt-intro { font-size: 16px; line-height: 1.6; margin-bottom: 15px; }
+        .dt-box { border: 1px solid #ddd; margin-bottom: 20px; background: #fff; }
+        .dt-maroon { background: #800000; color: white; text-align: center; padding: 8px; font-weight: bold; font-size: 16px; }
+        .dt-green-h { background: #008000; color: white; text-align: center; padding: 8px; font-weight: bold; font-size: 16px; }
+        .dt-orange { background: #FFA500; color: white; text-align: center; padding: 8px; font-weight: bold; font-size: 16px; }
+        .dt-blue-h { background: #000080; color: white; text-align: center; padding: 8px; font-weight: bold; font-size: 16px; }
+        .dt-pink { background: #c71586; color: white; text-align: center; padding: 8px; font-weight: bold; font-size: 16px; }
+        .dt-list { padding: 15px; font-size: 15px; line-height: 1.6; }
+        .dt-list li { margin-bottom: 8px; }
+        .dt-table { width: 100%; border-collapse: collapse; }
+        .dt-table th, .dt-table td { border: 1px solid #ddd; padding: 10px; font-size: 15px; text-align: left; }
+        .dt-table th { background: #f0f0f0; }
+        .dt-links { background: #FFF9C4; padding: 15px; border: 1px solid #ddd; }
+        .dt-links table { width: 100%; border-collapse: collapse; }
+        .dt-links td { border: 1px solid #ddd; padding: 10px; font-size: 15px; font-weight: bold; text-align: center; }
+        .dt-links a { color: #0044ff; font-weight: bold; text-decoration: none; }
+        .dt-faq { padding: 15px; }
+        .dt-faq b { display: block; margin-bottom: 15px; font-size: 16px; }
+    </style>
+</head>
+<body>
+
+<div id="homePage">
+    <div class="top-header">
+        <h1>SARKARI RESALT™</h1>
+        <p>SarkariResalt.com</p>
+    </div>
+    <div class="nav-bar">
+        <div class="nav-menu" onclick="showDetail('Menu')"><i class="fas fa-bars"></i> Menu</div>
+        <div class="nav-links">
+            <a onclick="showHome()">Home</a>
+            <a onclick="showDetail('Latest Job')">Latest Job</a>
+            <a onclick="showDetail('Resalt')">Resalt</a>
+            <a onclick="showDetail('Admit Card')">Admit Card</a>
+        </div>
+        <div class="nav-icon"><i class="fas fa-search"></i></div>
+    </div>
+    <div class="banner">
+        Sarkari Resalt ™ Official website since 2009 – Get Online Form, Results, Admit Card, Answer Key, Syllabus, Career News. <b>Sarkari Yojana, Scholarship, Sarkari Notice</b> etc. <span style="background:#ff0000;color:white;padding:2px 8px;border-radius:10px;font-size:12px;font-weight:bold;border:2px solid #000;">LIVE</span> <a href="#" class="banner-btn">Preparing For Tests</a>
+    </div>
+
+    <div class="home-container">
+        <div class="tools-title"><a href="#">SarkariResalt Tools</a></div>
+        <div class="tools-grid">
+            <div class="tool-box t-red" onclick="showDetail('BPSC')">BPSC School Teacher Form (32,388 Posts)</div>
+            <div class="tool-box t-orange" onclick="showDetail('Meditation')">Daily 5 Minutes Meditation & Crack Exams</div>
+            <div class="tool-box t-pink" onclick="showDetail('SBI')">SBI Clerk Online Form 2026 (9124 Posts)</div>
+            <div class="tool-box t-green" onclick="showDetail('IBPS')">IBPS Clerk 16th Form (1403 Posts)</div>
+            <div class="tool-box t-blue" onclick="showDetail('UPSSSC')">UPSSSC PET Online Form 2026</div>
+            <div class="tool-box t-maroon" onclick="showDetail('RRVUNL')">RRVUNL JE / Other Post Form (2005 Posts)</div>
+        </div>
+
+        <div class="discover-box">
+            <div class="discover-header">Discover more</div>
+            <div class="discover-row" onclick="showDetail('Jobs')">Securing Government Jobs <span class="arrow">&gt;</span></div>
+            <div class="discover-row" onclick="showDetail('Programs')">Comparing College Programs <span class="arrow">&gt;</span></div>
+            <div class="discover-row" onclick="showDetail('Schools')">Choosing Private Schools <span class="arrow">&gt;</span></div>
+        </div>
+
+        <!-- HARDCODED 225+ LINKS -->
+        <div class="grid-3">
+
+            <!-- 1. Results (30 Links) -->
+            <div class="box">
+                <div class="box-header">Resalts</div>
+                <div class="box-content">
+                    <ul>
+                        <li><a onclick="showDetail('SBI PO Pre Resalt 2026 – Out')">SBI PO Pre Resalt 2026 – Out</a></li>
+                        <li><a onclick="showDetail('NTA UGC NET June Final Answer Key 2026')">NTA UGC NET June Final Answer Key 2026</a></li>
+                        <li><a onclick="showDetail('RRB NTPC CEN 05/2024 Result Score Card 2026')">RRB NTPC CEN 05/2024 Result Score Card 2026</a></li>
+                        <li><a onclick="showDetail('Bihar BTSC Staff Nurse Result / Cutoff 2026')">Bihar BTSC Staff Nurse Result / Cutoff 2026</a></li>
+                        <li><a onclick="showDetail('UPSSSC Forest Guard Eligibility Result 2026')">UPSSSC Forest Guard Eligibility Result 2026</a></li>
+                        <li><a onclick="showDetail('UPTET Result 2026 – Declared')">UPTET Result 2026 – Declared</a></li>
+                        <li><a onclick="showDetail('RBI Bank Assistant Pre Exam Marks / Cutoff 2026')">RBI Bank Assistant Pre Exam Marks / Cutoff 2026</a></li>
+                        <li><a onclick="showDetail('UPSC CAPF AC Result 2026 – Out')">UPSC CAPF AC Result 2026 – Out</a></li>
+                        <li><a onclick="showDetail('SSC CGL Tier 1 Result 2025')">SSC CGL Tier 1 Result 2025</a></li>
+                        <li><a onclick="showDetail('IBPS Clerk Pre Result 2026')">IBPS Clerk Pre Result 2026</a></li>
+                        <li><a onclick="showDetail('SSC
+                        GD Constable Result 2026')">SSC GD Constable Result 2026</a></li>
+                        <li><a onclick="showDetail('AIIMS NORCET 7 Result 2026')">AIIMS NORCET 7 Result 2026</a></li>
+                        <li><a onclick="showDetail('NTA CUET UG Result 2026')">NTA CUET UG Result 2026</a></li>
+                        <li><a onclick="showDetail('CSIR NET Result 2026')">CSIR NET Result 2026</a></li>
+                        <li><a onclick="showDetail('GATE Result 2026')">GATE Result 2026</a></li>
+                        <li><a onclick="showDetail('CAT Result 2026')">CAT Result 2026</a></li>
+                        <li><a onclick="showDetail('XAT Result 2026')">XAT Result 2026</a></li>
+                        <li><a onclick="showDetail('Bihar Police SI Result 2026')">Bihar Police SI Result 2026</a></li>
+                        <li><a onclick="showDetail('UPSC CSE Mains Result 2025')">UPSC CSE Mains Result 2025</a></li>
+                        <li><a onclick="showDetail('BPSC TRE Result 2026')">BPSC TRE Result 2026</a></li>
+                        <li><a onclick="showDetail('RRB Group D Result 2026')">RRB Group D Result 2026</a></li>
+                        <li><a onclick="showDetail('UPSC NDA Result 2026')">UPSC NDA Result 2026</a></li>
+                        <li><a onclick="showDetail('IBPS SO Pre Result 2026')">IBPS SO Pre Result 2026</a></li>
+                        <li><a onclick="showDetail('SBI PO Mains Result 2026')">SBI PO Mains Result 2026</a></li>
+                        <li><a onclick="showDetail('Patliantra University PPUP UG 4th Merit List 2026')">Patliantra University PPUP UG 4th Merit List 2026</a></li>
+                        <li><a onclick="showDetail('OICL Administrative Officer 2025 Score Card')">OICL Administrative Officer 2025 Score Card</a></li>
+                        <li><a onclick="showDetail('BPSC Auditor Pre Result 2026 – Out')">BPSC Auditor Pre Result 2026 – Out</a></li>
+                        <li><a onclick="showDetail('Haryana HTET Score Card 2026')">Haryana HTET Score Card 2026</a></li>
+                        <li><a onclick="showDetail('KVS NVS Teaching & Non-Teaching Tier-II Result 2026')">KVS NVS Teaching & Non-Teaching Tier-II Result 2026</a></li>
+                        <li><a onclick="showDetail('NTA ICAR AIEEA PG Ph.D. Result 2026')">NTA ICAR AIEEA PG Ph.D. Result 2026</a></li>
+                    </ul>
+                    <a class="view-more" onclick="showDetail('Resalts')">View More</a>
+                </div>
+            </div>
+
+            <!-- 2. Latest Jobs (30 Links) -->
+            <div class="box">
+                <div class="box-header">Latest Jobs 🏢</div>
+                <div class="box-content">
+                    <ul>
+                        <li><a onclick="showDetail('IBPS Clerk (C.S.A.) 16th Online Form 2026')">IBPS Clerk (C.S.A.) 16th Online Form 2026</a></li>
+                        <li><a onclick="showDetail('ISRO URSC Apprentice Online Form 2026')">ISRO URSC Apprentice Online Form 2026</a></li>
+                        <li><a onclick="showDetail('SKA University Non Teaching Post Online Form 2026')">SKA University Non Teaching Post Online Form 2026</a></li>
+                        <li><a onclick="showDetail('ISRO ICKB Scientist / Engineer Online Form 2026')">ISRO ICKB Scientist / Engineer Online Form 2026</a></li>
+                        <li><a onclick="showDetail('India Post GDS Online Form 2026')">India Post GDS Online Form 2026</a></li>
+                        <li><a onclick="showDetail('UPSSSC PET Online Form 2026')">UPSSSC PET Online Form 2026</a></li>
+                        <li><a onclick="showDetail('Bihar STET Online Form 2026')">Bihar STET Online Form 2026</a></li>
+                        <li><a onclick="showDetail('CTET September Online Form 2026')">CTET September Online Form 2026</a></li>
+                        <li><a onclick="showDetail('SSC CHSL 2026 Notification')">SSC CHSL 2026 Notification</a></li>
+                        <li><a onclick="showDetail('UPSC EPFO APFC Online Form 2026')">UPSC EPFO APFC Online Form 2026</a></li>
+                        <li><a onclick="showDetail('RRC CRR Apprentice Online Form 2026')">RRC CRR Apprentice Online Form 2026</a></li>
+                        <li><a onclick="showDetail('IIT BHU Non Teaching Online Form 2026')">IIT BHU Non Teaching Online Form 2026</a></li>
+                        <li><a onclick="showDetail('BRVUNL JE / Junior Assistant Online Form 2026')">BRVUNL JE / Junior Assistant Online Form 2026</a></li>
+                        <li><a onclick="showDetail('UKPSC Veterinary Officer Online Form 2026')">UKPSC Veterinary Officer Online Form 2026</a></li>
+                        <li><a onclick="showDetail('Bihar BCCER BSC Various Post Online Form 2026')">Bihar BCCER BSC Various Post Online Form 2026</a></li>
+                        <li><a onclick="showDetail('MPESB Group 3 Sub Engineer & Other Post Online Form 2026')">MPESB Group 3 Sub Engineer & Other Post Online Form 2026</a></li>
+                        <li><a onclick="showDetail('RCFL Management Trainee MT Online Form 2026')">RCFL Management Trainee MT Online Form 2026</a></li>
+                        <li><a onclick="showDetail('PGCIL Apprentice Online Form 2026')">PGCIL Apprentice Online Form 2026</a></li>
+                        <li><a onclick="showDetail('NTPC NSPCL Various Post Online Form 2026')">NTPC NSPCL Various Post Online Form 2026</a></li>
+                        <li><a onclick="showDetail('SBI Junior Associates Clerk Online Form 2026')">SBI Junior Associates Clerk Online Form 2026</a></li>
+                        <li><a onclick="showDetail('NTPC Green Energy Limited DGM AE Online Form 2026')">NTPC Green Energy Limited DGM AE Online Form 2026</a></li>
+                        <li><a onclick="showDetail('MPESB Primary and Secondary Teachers MSPSTET Online Form 2026')">MPESB Primary and Secondary Teachers MSPSTET Online Form 2026</a></li>
+                        <li><a onclick="showDetail('Bank Of Baroda LBO Online Form 2026')">Bank Of Baroda LBO Online Form 2026</a></li>
+                        <li><a onclick="showDetail('Central Bank of India Specialist Officer Online Form 2026')">Central Bank of India Specialist Officer Online Form 2026</a></li>
+                        <li><a onclick="showDetail('Rajasthan Police Constable Online Form 2026')">Rajasthan Police Constable Online Form 2026</a></li>
+                        <li><a onclick="showDetail('MP Police Constable Online Form 2026')">MP Police Constable Online Form 2026</a></li>
+                        <li><a onclick="showDetail('Indian Overseas Bank Security Guard Online Form 2026')">Indian Overseas Bank Security Guard Online Form 2026</a></li>
+                        <li><a onclick="showDetail('India Post GDS Online Form')">India Post GDS Online Form</a></li>
+                        <li><a onclick="showDetail('SSC MTS / Havaldar Online Form 2026')">SSC MTS / Havaldar Online Form 2026</a></li>
+                        <li><a onclick="showDetail('UP Police Constable Recruitment 2026')">UP Police Constable Recruitment 2026</a></li>
+                    </ul>
+                    <a class="view-more" onclick="showDetail('Latest Jobs')">View More</a>
+                </div>
+            </div>
+
+            <!-- 3. Answer Key (30 Links) -->
+            <div class="box">
+                <div class="box-header">Answer Key</div>
+                <div class="box-content">
+                    <ul>
+                        <li><a onclick="showDetail('NTA UGC NET June Final Answer Key 2026')">NTA UGC NET June Final Answer Key 2026</a></li>
+                        <li><a onclick="showDetail('UPSSSC Lower PCS Answer Key 2026')">UPSSSC Lower PCS Answer Key 2026</a></li>
+                        <li><a onclick="showDetail('UPSSSC BCG Technician Final Answer Key 2026')">UPSSSC BCG Technician Final Answer Key 2026</a></li>
+                        <li><a onclick="showDetail('UPSSSC Pharmacist Final Answer Key 2026')">UPSSSC Pharmacist Final Answer Key 2026</a></li>
+                        <li><a onclick="showDetail('RRB ALP CBT-II Answer Key 2026')">RRB ALP CBT-II Answer Key 2026</a></li>
+                        <li><a onclick="showDetail('SSC CGL Answer Key 2026')">SSC CGL Answer Key 2026</a></li>
+                        <li><a onclick="showDetail('CTET Answer Key 2026')">CTET Answer Key 2026</a></li>
+                        <li><a onclick="showDetail('NEET UG Answer Key 2026')">NEET UG Answer Key 2026</a></li>
+                        <li><a onclick="showDetail('JEE Main Answer Key 2026')">JEE Main Answer Key 2026</a></li>
+                        <li><a onclick="showDetail('IBPS SO Prelims Answer Key')">IBPS SO Prelims Answer Key</a></li>
+                        <li><a onclick="showDetail('Bihar BPSC APO Answer Key 2026')">Bihar BPSC APO Answer Key 2026</a></li>
+                        <li><a onclick="showDetail('UPSSSC Agriculture Technical Assistant Group-C Answer Key 2026')">UPSSSC Agriculture Technical Assistant Group-C Answer Key 2026</a></li>
+                        <li><a onclick="showDetail('AFCAT 02/2026 Answer Key')">AFCAT 02/2026 Answer Key</a></li>
+                        <li><a onclick="showDetail('JSSC Field Worker Answer Key 2026')">JSSC Field Worker Answer Key 2026</a></li>
+                        <li><a onclick="showDetail('UPSC CMS Answer Key 2026')">UPSC CMS Answer Key 2026</a></li>
+                        <li><a onclick="showDetail('BPSC 2nd Grade Teacher Answer Key 2026')">BPSC 2nd Grade Teacher Answer Key 2026</a></li>
+                        <li><a onclick="showDetail('Punjab PSPCL JE
+                        Electrical Answer Key 2026')">Punjab PSPCL JE Electrical Answer Key 2026</a></li>
+                        <li><a onclick="showDetail('Patna High Court Computer Operator Cum Answer Key')">Patna High Court Computer Operator Cum Answer Key</a></li>
+                        <li><a onclick="showDetail('Bihar Police SI Answer Key 2026')">Bihar Police SI Answer Key 2026</a></li>
+                        <li><a onclick="showDetail('UP Police Constable Answer Key')">UP Police Constable Answer Key</a></li>
+                        <li><a onclick="showDetail('Railway Group D Answer Key')">Railway Group D Answer Key</a></li>
+                        <li><a onclick="showDetail('SSC GD Answer Key')">SSC GD Answer Key</a></li>
+                        <li><a onclick="showDetail('AIIMS NORCET Answer Key')">AIIMS NORCET Answer Key</a></li>
+                        <li><a onclick="showDetail('UPSC Prelims Answer Key')">UPSC Prelims Answer Key</a></li>
+                        <li><a onclick="showDetail('NTA CUET Answer Key')">NTA CUET Answer Key</a></li>
+                        <li><a onclick="showDetail('IIT JAM Answer Key')">IIT JAM Answer Key</a></li>
+                        <li><a onclick="showDetail('CSIR NET Answer Key')">CSIR NET Answer Key</a></li>
+                        <li><a onclick="showDetail('UPSC CDS Answer Key')">UPSC CDS Answer Key</a></li>
+                        <li><a onclick="showDetail('Agniveer Answer Key')">Agniveer Answer Key</a></li>
+                        <li><a onclick="showDetail('UPTET Answer Key 2026')">UPTET Answer Key 2026</a></li>
+                    </ul>
+                    <a class="view-more" onclick="showDetail('Answer Key')">View More</a>
+                </div>
+            </div>
+
+            <!-- 4. Admit Cards (25 Links) -->
+            <div class="box">
+                <div class="box-header">Admit Cards</div>
+                <div class="box-content">
+                    <ul>
+                        <li><a onclick="showDetail('PNB Bank Lab Assistant Admit Card 2026')">PNB Bank Lab Assistant Admit Card 2026</a></li>
+                        <li><a onclick="showDetail('NEET PG 2026 Admit Card')">NEET PG 2026 Admit Card</a></li>
+                        <li><a onclick="showDetail('RPSC APO Exam City Details 2026')">RPSC APO Exam City Details 2026</a></li>
+                        <li><a onclick="showDetail('Railway RRB ALP Application Status 2026')">Railway RRB ALP Application Status 2026</a></li>
+                        <li><a onclick="showDetail('DSSSB Various Post Admit Card 2026')">DSSSB Various Post Admit Card 2026</a></li>
+                        <li><a onclick="showDetail('RRB Group D Exam City / Admit Card 2026')">RRB Group D Exam City / Admit Card 2026</a></li>
+                        <li><a onclick="showDetail('CTET Sept Admit Card 2026')">CTET Sept Admit Card 2026</a></li>
+                        <li><a onclick="showDetail('SSC CGL Tier 2 Admit Card')">SSC CGL Tier 2 Admit Card</a></li>
+                        <li><a onclick="showDetail('UP Police Constable Admit Card')">UP Police Constable Admit Card</a></li>
+                        <li><a onclick="showDetail('NTA UGC NET Admit Card')">NTA UGC NET Admit Card</a></li>
+                        <li><a onclick="showDetail('UPSC Prelims Admit Card')">UPSC Prelims Admit Card</a></li>
+                        <li><a onclick="showDetail('IBPS PO Mains Admit Card')">IBPS PO Mains Admit Card</a></li>
+                        <li><a onclick="showDetail('SBI Clerk Mains Admit Card')">SBI Clerk Mains Admit Card</a></li>
+                        <li><a onclick="showDetail('AIIMS NORCET 7 Admit Card')">AIIMS NORCET 7 Admit Card</a></li>
+                        <li><a onclick="showDetail('BPSC TRE Admit Card')">BPSC TRE Admit Card</a></li>
+                        <li><a onclick="showDetail('SSC CHSL Tier 1 Admit Card')">SSC CHSL Tier 1 Admit Card</a></li>
+                        <li><a onclick="showDetail('UPSSSC Junior Assistant Admit Card')">UPSSSC Junior Assistant Admit Card</a></li>
+                        <li><a onclick="showDetail('Rajasthan Police Admit Card')">Rajasthan Police Admit Card</a></li>
+                        <li><a onclick="showDetail('MP Police Admit Card')">MP Police Admit Card</a></li>
+                        <li><a onclick="showDetail('Bihar Police SI Admit Card 2026')">Bihar Police SI Admit Card 2026</a></li>
+                        <li><a onclick="showDetail('LIC AAO Admit Card')">LIC AAO Admit Card</a></li>
+                        <li><a onclick="showDetail('ESIC UDC Admit Card')">ESIC UDC Admit Card</a></li>
+                        <li><a onclick="showDetail('AIIMS BSc Nursing Admit Card')">AIIMS BSc Nursing Admit Card</a></li>
+                        <li><a onclick="showDetail('UPSC Engineering Services Admit Card')">UPSC Engineering Services Admit Card</a></li>
+                        <li><a onclick="showDetail('JEE Main 2026 Admit Card')">JEE Main 2026 Admit Card</a></li>
+                    </ul>
+                    <a class="view-more" onclick="showDetail('Admit Cards')">View More</a>
+                </div>
+            </div>
+
+            <!-- 5. Admission (25 Links) -->
+            <div class="box">
+                <div class="box-header">Admission 🎓</div>
+                <div class="box-content">
+                    <ul>
+                        <li><a onclick="showDetail('IIT GATE 2027 Online Form – Start')">IIT GATE 2027 Online Form – Start</a></li>
+                        <li><a onclick="showDetail('Bihar STET Online Form 2026')">Bihar STET Online Form 2026</a></li>
+                        <li><a onclick="showDetail('CTET September Online Form 2026')">CTET September Online Form 2026</a></li>
+                        <li><a onclick="showDetail('IIT JAM 2027 Online Form')">IIT JAM 2027 Online Form</a></li>
+                        <li><a onclick="showDetail('CLAT Online Form 2026 – Start')">CLAT Online Form 2026 – Start</a></li>
+                        <li><a onclick="showDetail('NEET
+                        UG 2026 Online Form')">NEET UG 2026 Online Form</a></li>
+                        <li><a onclick="showDetail('NTA CUET UG 2026 Online Form')">NTA CUET UG 2026 Online Form</a></li>
+                        <li><a onclick="showDetail('UP B.Ed JEE 2026 Admission')">UP B.Ed JEE 2026 Admission</a></li>
+                        <li><a onclick="showDetail('IGNOU Admission 2026')">IGNOU Admission 2026</a></li>
+                        <li><a onclick="showDetail('NIOS Admission 2026')">NIOS Admission 2026</a></li>
+                        <li><a onclick="showDetail('IIT Mains 2026 Admission')">IIT Mains 2026 Admission</a></li>
+                        <li><a onclick="showDetail('BHU UET 2026 Admission')">BHU UET 2026 Admission</a></li>
+                        <li><a onclick="showDetail('DU CSAS 2026 Admission')">DU CSAS 2026 Admission</a></li>
+                        <li><a onclick="showDetail('UP Polytechnic JEECUP 2026')">UP Polytechnic JEECUP 2026</a></li>
+                        <li><a onclick="showDetail('Bihar Board Inter Admission')">Bihar Board Inter Admission</a></li>
+                        <li><a onclick="showDetail('Allahabad University PGAT 2026')">Allahabad University PGAT 2026</a></li>
+                        <li><a onclick="showDetail('St. Xavier's Admission 2026')">St. Xavier's Admission 2026</a></li>
+                        <li><a onclick="showDetail('NIFT Entrance Exam 2026')">NIFT Entrance Exam 2026</a></li>
+                        <li><a onclick="showDetail('NID DAT 2026 Admission')">NID DAT 2026 Admission</a></li>
+                        <li><a onclick="showDetail('Symbiosis SET 2026')">Symbiosis SET 2026</a></li>
+                        <li><a onclick="showDetail('Christ University Admission')">Christ University Admission</a></li>
+                        <li><a onclick="showDetail('Jamia Millia Islamia Admission')">Jamia Millia Islamia Admission</a></li>
+                        <li><a onclick="showDetail('AMU Admission 2026')">AMU Admission 2026</a></li>
+                        <li><a onclick="showDetail('BCECE Mop-Up Revised Counselling 2025')">BCECE Mop-Up Revised Counselling 2025</a></li>
+                        <li><a onclick="showDetail('UP Scholarship Online Form 2026-27')">UP Scholarship Online Form 2026-27</a></li>
+                    </ul>
+                    <a class="view-more" onclick="showDetail('Admission')">View More</a>
+                </div>
+            </div>
+
+            <!-- 6. Documents (25 Links) -->
+            <div class="box">
+                <div class="box-header">Documents</div>
+                <div class="box-content">
+                    <ul>
+                        <li><a onclick="showDetail('BPSC Exam Calendar 2026')">BPSC Exam Calendar 2026</a></li>
+                        <li><a onclick="showDetail('UP Scholarship Online Form 2026-27')">UP Scholarship Online Form 2026-27</a></li>
+                        <li><a onclick="showDetail('SSC Exam Calendar 2026-27')">SSC Exam Calendar 2026-27</a></li>
+                        <li><a onclick="showDetail('PAN Card Registration Correction 2026')">PAN Card Registration Correction 2026</a></li>
+                        <li><a onclick="showDetail('Aadhaar Card Download Correction 2026')">Aadhaar Card Download Correction 2026</a></li>
+                        <li><a onclick="showDetail('Voter ID Registration & Other Services')">Voter ID Registration & Other Services</a></li>
+                        <li><a onclick="showDetail('Driving License / Vehicle Registration')">Driving License / Vehicle Registration</a></li>
+                        <li><a onclick="showDetail('Ayushman Card Apply Online')">Ayushman Card Apply Online</a></li>
+                        <li><a onclick="showDetail('UP Kanya Sumangala Yojana')">UP Kanya Sumangala Yojana</a></li>
+                        <li><a onclick="showDetail('PM Kisan Beneficiary Status')">PM Kisan Beneficiary Status</a></li>
+                        <li><a onclick="showDetail('UP Income Caste Residential Certificate Online Verification 2026')">UP Income Caste Residential Certificate Online Verification 2026</a></li>
+                        <li><a onclick="showDetail('Ration Card Correction / Status 2026')">Ration Card Correction / Status 2026</a></li>
+                        <li><a onclick="showDetail('School Transfer Certificate (TC) Download')">School Transfer Certificate (TC) Download</a></li>
+                        <li><a onclick="showDetail('Unemployment Certificate Apply')">Unemployment Certificate Apply</a></li>
+                        <li><a onclick="showDetail('Gas Connection Subsidy Form')">Gas Connection Subsidy Form</a></li>
+                        <li><a onclick="showDetail('Electricity Bill Payment Online')">Electricity Bill Payment Online</a></li>
+                        <li><a onclick="showDetail('Land Records (Bhu Naksha / Khatauni) Download')">Land Records (Bhu Naksha / Khatauni) Download</a></li>
+                        <li><a onclick="showDetail('Pension Scheme Apply Online')">Pension Scheme Apply Online</a></li>
+                        <li><a onclick="showDetail('PM Awas Yojana Apply Online')">PM Awas Yojana Apply Online</a></li>
+                        <li><a onclick="showDetail('Shram Card Apply Online')">Shram Card Apply Online</a></li>
+                        <li><a onclick="showDetail('e-Shram Card Registration')">e-Shram Card Registration</a></li>
+                        <li><a onclick="showDetail('Kisan Credit Card (KCC) Apply')">Kisan Credit Card (KCC) Apply</a></li>
+                        <li><a onclick="showDetail('APY / PMJJBY / PMSBY Yojana')">APY / PMJJBY / PMSBY Yojana</a></li>
+                        <li><a onclick="showDetail('Student Credit Card Scheme')">Student Credit Card Scheme</a></li>
+                        <li><a onclick="showDetail('National Scholarship Portal Login')">National Scholarship Portal Login</a></li>
+                    </ul>
+                    <a class="view-more"
+                    onclick="showDetail('Documents')">View More</a>
+                </div>
+            </div>
+
+            <!-- 7. 10th/ITI Jobs (20 Links) -->
+            <div class="box">
+                <div class="box-header">10th/ITI Jobs 🔧</div>
+                <div class="box-content">
+                    <div class="result-pill">Result check service</div>
+                    <ul>
+                        <li><a onclick="showDetail('RRVUNL JE / Junior Assistant Online Form 2026')">RRVUNL JE / Junior Assistant Online Form 2026</a></li>
+                        <li><a onclick="showDetail('Railway RRC Group D Exam City / Admit Card')">Railway RRC Group D Exam City / Admit Card</a></li>
+                        <li><a onclick="showDetail('UP ITI 2026 Online Form')">UP ITI 2026 Online Form</a></li>
+                        <li><a onclick="showDetail('ITI Apprenticeship 2026 Form')">ITI Apprenticeship 2026 Form</a></li>
+                        <li><a onclick="showDetail('UPSC NDA (10+2) 2026 Form')">UPSC NDA (10+2) 2026 Form</a></li>
+                        <li><a onclick="showDetail('Agniveer Rally (10th Pass) 2026')">Agniveer Rally (10th Pass) 2026</a></li>
+                        <li><a onclick="showDetail('SSC MTS / Havaldar 2026 Form')">SSC MTS / Havaldar 2026 Form</a></li>
+                        <li><a onclick="showDetail('Railway Group D (10th Pass) 2026')">Railway Group D (10th Pass) 2026</a></li>
+                        <li><a onclick="showDetail('RRB NTPC (12th Pass) 2026')">RRB NTPC (12th Pass) 2026</a></li>
+                        <li><a onclick="showDetail('UP Police Constable (10th) 2026')">UP Police Constable (10th) 2026</a></li>
+                        <li><a onclick="showDetail('Bihar Police Constable (10th) 2026')">Bihar Police Constable (10th) 2026</a></li>
+                        <li><a onclick="showDetail('India Post GDS (10th) 2026')">India Post GDS (10th) 2026</a></li>
+                        <li><a onclick="showDetail('Central Warehouse Recruitment 2026')">Central Warehouse Recruitment 2026</a></li>
+                        <li><a onclick="showDetail('ESIC UDC 2026')">ESIC UDC 2026</a></li>
+                        <li><a onclick="showDetail('SSC GD Constable 2026')">SSC GD Constable 2026</a></li>
+                        <li><a onclick="showDetail('BSF Head Constable (10th) 2026')">BSF Head Constable (10th) 2026</a></li>
+                        <li><a onclick="showDetail('Indian Coast Guard Navik GD 2026')">Indian Coast Guard Navik GD 2026</a></li>
+                        <li><a onclick="showDetail('Navy SSR 2026')">Navy SSR 2026</a></li>
+                        <li><a onclick="showDetail('Army GD 2026')">Army GD 2026</a></li>
+                        <li><a onclick="showDetail('MP ITI 2026 Admission')">MP ITI 2026 Admission</a></li>
+                    </ul>
+                    <a class="view-more" onclick="showDetail('10th/ITI Jobs')">View More</a>
+                </div>
+            </div>
+
+            <!-- 8. Outsourcing Jobs (20 Links) -->
+            <div class="box">
+                <div class="box-header">Outsourcing Jobs</div>
+                <div class="box-content">
+                    <ul>
+                        <li><a onclick="showDetail('UP Chakbandi Vibhag MTS Online Form 2026')">UP Chakbandi Vibhag MTS Online Form 2026</a></li>
+                        <li><a onclick="showDetail('UP Jal Nigam ECCE Educator Online Form 2026')">UP Jal Nigam ECCE Educator Online Form 2026</a></li>
+                        <li><a onclick="showDetail('UP Ghazipur ECCE Educator Online Form 2026')">UP Ghazipur ECCE Educator Online Form 2026</a></li>
+                        <li><a onclick="showDetail('ESIC UDC / MTS Online Form')">ESIC UDC / MTS Online Form</a></li>
+                        <li><a onclick="showDetail('Rajasthan RSMSSB Clerk 2026')">Rajasthan RSMSSB Clerk 2026</a></li>
+                        <li><a onclick="showDetail('Delhi Jal Board Apprentice 2026')">Delhi Jal Board Apprentice 2026</a></li>
+                        <li><a onclick="showDetail('UPPCL Lineman 2026')">UPPCL Lineman 2026</a></li>
+                        <li><a onclick="showDetail('UPBCWW Peon Online Form 2026')">UPBCWW Peon Online Form 2026</a></li>
+                        <li><a onclick="showDetail('UPBCWW Computer Operator Online Form 2026')">UPBCWW Computer Operator Online Form 2026</a></li>
+                        <li><a onclick="showDetail('UPSRTC Gonda Balrampur Bus Conductor')">UPSRTC Gonda Balrampur Bus Conductor</a></li>
+                        <li><a onclick="showDetail('MPESB Group 4 Staff Nurse')">MPESB Group 4 Staff Nurse</a></li>
+                        <li><a onclick="showDetail('UPSSSC Junior Assistant')">UPSSSC Junior Assistant</a></li>
+                        <li><a onclick="showDetail('UPRVUNL Technician')">UPRVUNL Technician</a></li>
+                        <li><a onclick="showDetail('DMRC Maintainer')">DMRC Maintainer</a></li>
+                        <li><a onclick="showDetail('NTPC Diploma Trainee')">NTPC Diploma Trainee</a></li>
+                        <li><a onclick="showDetail('POWERGRID Apprentice')">POWERGRID Apprentice</a></li>
+                        <li><a onclick="showDetail('SJVN Apprentice')">SJVN Apprentice</a></li>
+                        <li><a onclick="showDetail('ONGC Apprentice')">ONGC Apprentice</a></li>
+                        <li><a onclick="showDetail('IOCL Apprentice')">IOCL Apprentice</a></li>
+                        <li><a onclick="showDetail('BPCL Apprentice')">BPCL Apprentice</a></li>
+                    </ul>
+                    <a class="view-more" onclick="showDetail('Outsourcing Jobs')">View More</a>
+                </div>
+            </div>
+
+            <!-- 9. Syllabus (20 Links) -->
+            <div class="box">
+                <div class="box-header">Syllabus</div>
+                <div class="box-content">
+                    <ul>
+                        <li><a onclick="showDetail('Railway RRB Group D
+                        Exam City / Admit Card')">Railway RRB Group D Exam City / Admit Card</a></li>
+                        <li><a onclick="showDetail('UP Police SI ASI Syllabus / Exam Pattern 2025')">UP Police SI ASI Syllabus / Exam Pattern 2025</a></li>
+                        <li><a onclick="showDetail('SSC CHSL 2026 Syllabus PDF')">SSC CHSL 2026 Syllabus PDF</a></li>
+                        <li><a onclick="showDetail('CTET Syllabus (Level 1 & 2)')">CTET Syllabus (Level 1 & 2)</a></li>
+                        <li><a onclick="showDetail('UPSC Prelims Syllabus 2026')">UPSC Prelims Syllabus 2026</a></li>
+                        <li><a onclick="showDetail('IIT JEE Syllabus 2026')">IIT JEE Syllabus 2026</a></li>
+                        <li><a onclick="showDetail('NEET UG Syllabus 2026')">NEET UG Syllabus 2026</a></li>
+                        <li><a onclick="showDetail('RRB NTPC Syllabus 2026')">RRB NTPC Syllabus 2026</a></li>
+                        <li><a onclick="showDetail('SSC CGL Syllabus 2026')">SSC CGL Syllabus 2026</a></li>
+                        <li><a onclick="showDetail('UPSC NDA Syllabus 2026')">UPSC NDA Syllabus 2026</a></li>
+                        <li><a onclick="showDetail('Bihar Police SI Syllabus')">Bihar Police SI Syllabus</a></li>
+                        <li><a onclick="showDetail('UPPSC PCS Syllabus')">UPPSC PCS Syllabus</a></li>
+                        <li><a onclick="showDetail('IBPS Clerk Syllabus')">IBPS Clerk Syllabus</a></li>
+                        <li><a onclick="showDetail('SBI PO Syllabus')">SBI PO Syllabus</a></li>
+                        <li><a onclick="showDetail('LIC AAO Syllabus')">LIC AAO Syllabus</a></li>
+                        <li><a onclick="showDetail('Indian Coast Guard Syllabus')">Indian Coast Guard Syllabus</a></li>
+                        <li><a onclick="showDetail('Agniveer Syllabus')">Agniveer Syllabus</a></li>
+                        <li><a onclick="showDetail('NTA CUET Syllabus')">NTA CUET Syllabus</a></li>
+                        <li><a onclick="showDetail('GATE Syllabus')">GATE Syllabus</a></li>
+                        <li><a onclick="showDetail('RBI Grade B Syllabus')">RBI Grade B Syllabus</a></li>
+                    </ul>
+                    <a class="view-more" onclick="showDetail('Syllabus')">View More</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="owner-section">
+        <img src="owner.jpg" alt="DIVY" class="owner-img">
+        <div class="owner-name">DIVY</div>
+        <div class="owner-title">Website Developer & Owner</div>
+        <div class="owner-details"><b>🎓 Education:</b> IIT MAINS ENGINEERING QUALIFIED<br><b>🪖 Service:</b> EX - BSF ARMY<br><b>🏦 Experience:</b> EX - INDIAN BANK EMPLOYEE</div>
+        <div class="owner-contact">📞 Mobile: 9369224174<br>📧 E-mail: umadivy500@gmail.com</div>
+    </div>
+</div>
+
+<div id="detailPage" class="detail-page">
+    <button class="back-btn" onclick="showHome()">← Back to Home</button>
+    <div class="dt-title" id="dtTitle">Sarkari Resalt Post Details</div>
+    <div class="dt-date" id="dtDate">Post Date: August 28, 2026</div>
+    <div class="dt-intro" id="dtIntro">Details about this post have been released.</div>
+    
+    <div id="dtContent"></div>
+    
+    <div class="owner-section">
+        <img src="owner.jpg" alt="DIVY" class="owner-img">
+        <div class="owner-name">DIVY</div>
+        <div class="owner-title">Website Developer & Owner</div>
+        <div class="owner-details"><b>🎓 Education:</b> IIT MAINS ENGINEERING QUALIFIED<br><b>🪖 Service:</b> EX - BSF ARMY<br><b>🏦 Experience:</b> EX - INDIAN BANK EMPLOYEE</div>
+        <div class="owner-contact">📞 Mobile: 9369224174<br>📧 E-mail: umadivy500@gmail.com</div>
+    </div>
+</div>
+
+<script>
+    // Specific Data for SBI and RRB (Others auto-generate with Google Search Links)
+    const postDetails = {
+        "SBI PO Pre Resalt 2026 – Out": {
+            title: "SBI PO Pre Resalt 2026 – Out",
+            date: "Post Date: August 28, 2026",
+            intro: "State Bank Of India (SBI) Has Released Pre Result On Its Official Website For The Probationary Officer PO Examination 2026.",
+            dates: ["Online Apply Start Date : 18 June 2026", "Pre Exam Date : 02 August 2026", "Pre Result : 28 August 2026 Available Now"],
+            fee: ["For General, OBC, EWS : ₹ 750/-", "For SC / ST, PH : ₹ 00/-"],
+            age: ["Minimum Age : 21 Years", "Maximum Age : 30 Years"],
+            total: "1500 Posts",
+            vacancy: [["General", "588", "—"], ["OBC", "390", "—"]],
+            eligibility: "Bachelor's Degree In Any Stream.",
+            selection: ["Pre Exam", "Mains Exam", "Interview"],
+            links: [
+                ["Download Pre Result", "https://sbi.co.in/web/careers"], 
+                ["Download Official Notification", "https://sbi.co.in/web/careers"], 
+                ["SBI Official Website", "https://sbi.co.in/web/careers"]
+            ],
+            faq: [["When Was The Result Released?", "28 August 2026."]]
+        },
+        "RRB NTPC CEN 05/2024 Result Score Card 2026": {
+            title: "RRB NTPC CEN 05/2024 Result Score Card 2026",
+            date: "Post Date: August 28, 2026",
+            intro: "Railway Recruitment Board (RRB) Has Released The Result For The NTPC Graduate Level Post.",
+            dates: ["CBT 1 Exam : August 2026", "Result : 28 August 2026"],
+            fee: ["For General, OBC, EWS : ₹ 500/-", "For SC / ST, PH : ₹ 250/-"],
+            age: ["Minimum Age : 18 Years", "Maximum Age : 36 Years"],
+            total: "Not Applicable",
+            vacancy: [["General", "2446", "—"], ["OBC", "1822", "—"]],
+            eligibility: "12th Pass Or Graduate.",
+            selection: ["CBT 1", "CBT 2", "Medical"],
+            links: [
+                ["Download Result", "https://indianrailways.gov.in"], 
+                ["Official RRB Website", "https://indianrailways.gov.in"]
+            ],
+            faq: [["When Was Result Released?", "28 August 2026."]]
+        }
+    };
+
+    // Show Detail Page (External Google Search for all others)
+    function showDetail(title) {
+        document.getElementById('homePage').style.display = 'none';
+        document.getElementById('detailPage').style.display = 'block';
+        
+        let data = postDetails[title];
+        if (!data) {
+            let searchURL = "https://www.google.com/search?q=Official+Website+of+" + encodeURIComponent(title);
+            data = {
+                title: title, date: "Post Date: August 28, 2026",
+                intro: "Details of " + title + " have been released on the official website.",
+                dates: ["Application Start Date: 25 August 2026", "Application Last Date: 02 September 2026"],
+                fee: ["General: ₹ 1000/-", "OBC/SC/ST: ₹ 500/-"],
+                age: ["Minimum Age: 18 Years", "Maximum Age: 40 Years"],
+                total: "Not Applicable", vacancy: [],
+                eligibility: "Relevant qualification required.",
+                selection: ["Exam", "Interview"],
+                links: [
+                    ["Download Official Notification", searchURL], 
+                    ["Open Official Website", searchURL]
+                ],
+                faq: [["When will the result be released?", "As per the official notification."]]
+            };
+        }
+
+        document.getElementById('dtTitle').innerText = data.title;
+        document.getElementById('dtDate').innerText = data.date;
+        document.getElementById('dtIntro').innerHTML = data.intro;
+
+        let content = '';
+        content += `<div class="dt-box"><div class="dt-maroon">Important Dates</div><ul class="dt-list">`;
+        data.dates.forEach(d => content += `<li>${d}</li>`);
+        content += `</ul></div>`;
+
+        content += `<div class="dt-box"><div class="dt-maroon">Application Fee</div><ul class="dt-list">`;
+        data.fee.forEach(d => content += `<li>${d}</li>`);
+        content += `</ul></div>`;
+
+        content += `<div class="dt-box"><div class="dt-green-h">Age Limits</div><ul class="dt-list">`;
+        data.age.forEach(d => content += `<li>${d}</li>`);
+        content += `</ul></div>`;
+
+        content += `<div class="dt-box"><div class="dt-orange">Total Post</div><div style="text-align:center; padding:10px; font-size:20px; font-weight:bold;">${data.total}</div></div>`;
+
+        if (data.vacancy.length > 0) {
+            content += `<div class="dt-box"><div
+            class="dt-blue-h">Vacancy Details</div><table class="dt-table"><tr><th>Category</th><th>Regular</th><th>Backlog</th></tr>`;
+            data.vacancy.forEach(row => content += `<tr><td>${row[0]}</td><td>${row[1]}</td><td>${row[2]}</td></tr>`);
+            content += `</table></div>`;
+        }
+
+        content += `<div class="dt-box"><div class="dt-blue-h">Eligibility</div><div class="dt-list">${data.eligibility}</div></div>`;
+        content += `<div class="dt-box"><div class="dt-blue-h">Mode Of Selection</div><ul class="dt-list">`;
+        data.selection.forEach(d => content += `<li>${d}</li>`);
+        content += `</ul></div>`;
+
+        content += `<div class="dt-box"><div class="dt-pink">Some Useful Important Links</div><div class="dt-links"><table>`;
+        data.links.forEach(d => content += `<tr><td>${d[0]}</td><td><a href="${d[1]}" target="_blank">Click Here</a></td></tr>`);
+        content += `</table></div></div>`;
+
+        if (data.faq.length > 0) {
+            content += `<div class="dt-box"><div class="dt-blue-h">Important Question</div><div class="dt-faq">`;
+            data.faq.forEach(q => content += `<b>Question: ${q[0]}</b><div>Answer: ${q[1]}</div><br>`);
+            content += `</div></div>`;
+        }
+
+        document.getElementById('dtContent').innerHTML = content;
+        window.scrollTo(0, 0);
+    }
+
+    function showHome() {
+        document.getElementById('homePage').style.display = 'block';
+        document.getElementById('detailPage').style.display = 'none';
+        window.scrollTo(0, 0);
+    }
+</script>
+</body>
+</html>
